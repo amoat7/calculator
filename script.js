@@ -4,8 +4,11 @@ let result = document.getElementById('result');
 result.value = '';
 let keyValues = [];
 let values = []; 
+let currentResult = 0;
+let previousResult = 0;
 let flag =0;
 let operands = ['+','-','/','*'];
+let lastVal;
 
 
 function getKey(event){
@@ -45,9 +48,80 @@ function getKey(event){
 
     values  = calculation.value.split(/([*+/-])/g); 
 
-    if 
+
+    lastVal = values.length-1;
+    if(!(operands.includes(values[lastVal])) && values[lastVal]!=='.'){
+
+        if(values.length === 3 && values[lastVal]!==''){
+            switch(values[lastVal-1]){
+                case('+'):
+                    currentResult = parseFloat(values[0]) + parseFloat(values[2]);
+                    previousResult = currentResult; 
+                    result.value = currentResult;
+                    break;
+
+                case('-'):
+                    currentResult = parseFloat(values[0]) -parseFloat(values[2]);
+                    previousResult = currentResult; 
+                    result.value = currentResult;
+                    break;
+
+                case('/'):
+                    currentResult = parseFloat(values[0]) / parseFloat(values[2]);
+                    previousResult = currentResult; 
+                    result.value = currentResult;
+                    break;
+
+                case('*'):
+                    currentResult = parseFloat(values[0]) * parseFloat(values[2]);
+                    previousResult = currentResult; 
+                    result.value = currentResult;
+                    break;
+    
+            }
+        }
+
+        else if(values.length > 4 && (!(operands.includes(values[lastVal])) && values[lastVal]!=='.') && values[lastVal]!==''){
+
+            switch(values[lastVal-1]){
+                case('+'):
+                    currentResult = previousResult + parseFloat(values[lastVal]);
+                    previousResult = currentResult; 
+                    result.value = currentResult;
+                    break;
+
+                case('-'):
+                    currentResult = previousResult - parseFloat(values[lastVal]);
+                    previousResult = currentResult; 
+                    result.value = currentResult;
+                    break;
+
+                case('/'):
+                    currentResult = previousResult /parseFloat(values[lastVal]);
+                    previousResult = currentResult; 
+                    result.value = currentResult;
+                    break;
+
+                case('*'):
+                    currentResult = previousResult *parseFloat(values[lastVal]);
+                    previousResult = currentResult; 
+                    result.value = currentResult;
+                    break;
+    
+            }
+
+        }
+
+        else{
+
+        }
+
+        
+    }
     
 }
+
+
 
 
 function keyColour(event){
@@ -68,6 +142,29 @@ function eventListeners(element){
 
 }
 
+function clearValues(event){
+    
+    if(event.target.innerHTML==='CE'){
+
+        result.value = '';
+        calculation.value = '';
+        keyValues = [];
+        values = []; 
+        currentResult = 0;
+        previousResult = 0;
+        flag =0;
+    }
+}
+
+function clear(element){
+    const key = document.getElementById(`${element}`);
+    key.addEventListener('touchstart', keyColour);
+    key.addEventListener('touchend', keyColour1);
+    key.addEventListener('touchend', clearValues)
+
+    return key;
+    
+}
 
 
 const minus = eventListeners('minus');
@@ -85,6 +182,8 @@ const zero = eventListeners('zero');
 const dot = eventListeners('dot');
 const divide = eventListeners('divide');
 const multiply = eventListeners('multiply');
+const ce  = clear('ce-btn');
+const c  = clear('c-btn');
 
 
 

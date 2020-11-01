@@ -1,41 +1,36 @@
 let calculation = document.getElementById('calculation');
 calculation.value = '';
-
 let result = document.getElementById('result');
 result.value = '';
-let value = 0;
-
 let keyValues = [];
-let operation = [];
 let values = []; 
-
+let flag =0;
 let operands = ['+','-','/','*'];
 
 
 function getKey(event){
-    
-    if(!(isNaN(parseFloat(event.target.innerHTML)))){
 
-        value = parseFloat(value + event.target.innerHTML);
+    (event.target.innerHTML==='.')?flag++:'';
+    
+
+    (operands.includes(event.target.innerHTML))?flag=0:''
+    
+
+    if(operands.includes(keyValues[keyValues.length-1]) && (isNaN(parseFloat(event.target.innerHTML)) && (event.target.innerHTML!=='.'))){
+        keyValues[keyValues.length-1]=event.target.innerHTML;  
+    }
+
+    else if(event.target.innerHTML==='.'&&keyValues[keyValues.length-1]==='.'){
+
+        keyValues[keyValues.length-1] = '.';
+        flag++;
+    }
+
+
+    else if(flag>=2&&event.target.innerHTML==='.'){
     }
 
     else{
-
-        if(values.length<2){
-            values.push(`${value}`)
-        }
-        value = 0;
-
-    }
-    
-    
-
-    if(operands.includes(keyValues[keyValues.length-1]) && (isNaN(parseFloat(event.target.innerHTML)))){
-        keyValues[keyValues.length-1]=event.target.innerHTML
-    }
-
-    else{
-
         keyValues.push(event.target.innerHTML);
     }
     
@@ -46,10 +41,12 @@ function getKey(event){
         
     }
 
-
-
     calculation.value = keyValues.join('');
 
+    values  = calculation.value.split(/([*+/-])/g); 
+
+    if 
+    
 }
 
 
@@ -73,9 +70,6 @@ function eventListeners(element){
 
 
 
-
-
-
 const minus = eventListeners('minus');
 const sum = eventListeners('plus');
 const seven = eventListeners('seven');
@@ -89,6 +83,8 @@ const two= eventListeners('two');
 const three = eventListeners('three');
 const zero = eventListeners('zero');
 const dot = eventListeners('dot');
+const divide = eventListeners('divide');
+const multiply = eventListeners('multiply');
 
 
 

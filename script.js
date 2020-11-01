@@ -160,9 +160,7 @@ function clearValues(event){
         result.value = '';
         keyValues.pop();
         calculation.value = keyValues.join('');
-        currentResult = 0;
-        previousResult = 0;
-
+        currentResult = previousResult;
         if(keyValues[keyValues.length-1]==='.'){
             flag  = 0;
         }
@@ -198,7 +196,7 @@ const dot = eventListeners('dot');
 const divide = eventListeners('divide');
 const multiply = eventListeners('multiply');
 const ce  = clear('ce-btn');
-const c  = clear('c-btn');
+//const c  = clear('c-btn');
 
 
 

@@ -154,6 +154,21 @@ function clearValues(event){
         previousResult = 0;
         flag =0;
     }
+
+    else{
+
+        result.value = '';
+        keyValues.pop();
+        calculation.value = keyValues.join('');
+        currentResult = 0;
+        previousResult = 0;
+
+        if(keyValues[keyValues.length-1]==='.'){
+            flag  = 0;
+        }
+
+
+    }
 }
 
 function clear(element){
